@@ -9,7 +9,7 @@ services:
 build:
   script:
   - export CI_APPLICATION_REPOSITORY="$CI_REGISTRY_IMAGE"
-  - export CI_APPLICATION_TAG="$(date -R | head -c3)"
+  - export CI_APPLICATION_TAG="$CI_COMMIT_REF_SLUG"-"$(date -R | head -c3)"
 
   # If you want to push to Docker Hub, set
   # CI_REGISTRY to "docker.io",
