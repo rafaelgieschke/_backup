@@ -8,4 +8,4 @@ run \
   | grep -E '"http_url_to_repo":"[^"]+"' -o | cut -d '"' -f 4 \
   | sed 'h;s/\.git$/.wiki.git/;H;g' \
   | grep rafaelgieschke \
-  | xargs -n 1 sh -c 'git clone --bare --mirror "$1"; cd -- "$(basename -- "$1")" && git fetch' -
+  | xargs -n 1 sh -c 'git clone --bare --mirror "$1"; cd -- "$(basename -- "$1")" && git fetch || true' -
