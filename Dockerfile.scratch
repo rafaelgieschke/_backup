@@ -1,2 +1,2 @@
-from alpine/git
-workdir /src
+FROM alpine/git
+WORKDIR /src
