@@ -11,11 +11,11 @@ RUN \
   | sed 'h;s/\.git$/.wiki.git/;H;g' \
   | grep rafaelgieschke \
   | xargs -n 1 sh -c 'git clone --bare --mirror "$0"; cd -- "$(basename -- "$0")" && git fetch' \
-  || true
+  || true; du -s *
 RUN \
   mkdir -p github; cd github; \
   wget -O- "https://api.github.com/users/rafaelgieschke/repos" \
   | grep -Eo '"clone_url"\s*:\s*"[^"]+"' | cut -d '"' -f 4 \
   | sed 'h;s/\.git$/.wiki.git/;H;g' \
   | xargs -n 1 sh -c 'git clone --bare --mirror "$0"; cd -- "$(basename -- "$0")" && git fetch' \
-  || true
+  || true; du -s *
