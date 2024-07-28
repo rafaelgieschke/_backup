@@ -1,9 +1,9 @@
-ARG CI_APPLICATION_REPOSITORY
-ARG CI_COMMIT_REF_SLUG
+ARG BASE_IMAGE
 
-FROM ${CI_APPLICATION_REPOSITORY}:${CI_COMMIT_REF_SLUG}
+FROM alpine/git AS base
 ENTRYPOINT ["sh"]
 
+FROM ${BASE_IMAGE:-base}
 RUN \
   wget -O- \
   "https://gitlab.com/api/v4/users/rafaelgieschke/projects?include_subgroups=true&per_page=100" \
