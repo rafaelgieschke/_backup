@@ -12,7 +12,7 @@ build:
   - day="$(date +%d)"
   - ref="$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
 
-  - test "$day" != "01" && docker pull "$ref" || docker build --target base -t "$ref" .
+  - test "$day" != "01" && docker pull "$ref" || docker build -t "$ref" --target base .
   - docker build -t "$ref" --build-arg BASE_IMAGE="$ref" --build-arg CI_JOB_TOKEN="$CI_JOB_TOKEN" .
   - docker tag "$ref" "$ref-$day"
 
