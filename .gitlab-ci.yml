@@ -7,12 +7,5 @@ build:
   # CI_REGISTRY_IMAGE to "registry-1.docker.io/username/repository",
   # CI_REGISTRY_USER, and CI_REGISTRY_PASSWORD
   # via Settings > CI/CD > Variables.
-  - image="$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "${image%%/*}"
-
-  - day="$(date +%d)"
-  - test "$day" != "01" && docker pull "$image" || docker build -t "$image" --target base .
-  - docker build -t "$image" --build-arg BASE_IMAGE="$image" "$@" .
-  - docker push "$image"
-  - docker tag "$image" "$image-$day"
-  - docker push "$image-$day"
+  - username="$CI_REGISTRY_USER" password="$CI_REGISTRY_PASSWORD" \
+      ./backup "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
