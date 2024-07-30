@@ -7,5 +7,5 @@ build:
   # CI_REGISTRY_IMAGE to "registry-1.docker.io/username/repository",
   # CI_REGISTRY_USER, and CI_REGISTRY_PASSWORD
   # via Settings > CI/CD > Variables.
-  - username="$CI_REGISTRY_USER" password="$CI_REGISTRY_PASSWORD" \
+  - username="$CI_REGISTRY_USER" password="$CI_REGISTRY_PASSWORD"
       ./backup "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
