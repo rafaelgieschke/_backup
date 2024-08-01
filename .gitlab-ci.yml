@@ -1,4 +1,6 @@
 build:
+  tags:
+  - saas-linux-medium-amd64
   image: docker
   services:
   - docker:dind

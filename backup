@@ -8,6 +8,7 @@ if test "${username-}"; then
     printf %s "$password" | docker login -u "$username" --password-stdin "${image%%/*}"
 fi
 
+set -x
 test "$day" != "01" && docker pull "$image" || docker build -t "$image" --target base .
 docker build -t "$image" --build-arg BASE_IMAGE="$image" "$@" .
 docker push "$image"
