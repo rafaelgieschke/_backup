@@ -7,17 +7,16 @@ jobs:
   backup:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      actions: write
     steps:
       - uses: actions/checkout@HEAD
       - run: |
+          gh workflow list -a --json id -q '.[].id' | xargs -L1 -- gh workflow enable --
           username="$CI_REGISTRY_USER" password="$CI_REGISTRY_PASSWORD" \
             ./backup "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git commit --allow-empty -m "Update"
-          git push
     env:
+      GH_TOKEN: ${{ github.token }}
+      GH_DEBUG: 1
       CI_REGISTRY_USER: ${{ secrets.CI_REGISTRY_USER }}
       CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
       CI_REGISTRY_IMAGE: ${{ vars.CI_REGISTRY_IMAGE }}
