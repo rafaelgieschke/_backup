@@ -10,8 +10,8 @@ jobs:
       actions: write
     steps:
       - uses: actions/checkout@HEAD
+      - run: gh workflow list -a --json id -q '.[].id' | xargs -L1 -- gh workflow enable --
       - run: |
-          gh workflow list -a --json id -q '.[].id' | xargs -L1 -- gh workflow enable --
           username="$CI_REGISTRY_USER" password="$CI_REGISTRY_PASSWORD" \
             ./backup "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
     env:
