@@ -11,13 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@HEAD
       - run: gh workflow list -a --json id -q '.[].id' | xargs -L1 -- gh workflow enable --
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_DEBUG: 1        
       - run: |
           username="$CI_REGISTRY_USER" password="$CI_REGISTRY_PASSWORD" \
             ./backup "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_DEBUG: 1
-      CI_REGISTRY_USER: ${{ secrets.CI_REGISTRY_USER }}
-      CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
-      CI_REGISTRY_IMAGE: ${{ vars.CI_REGISTRY_IMAGE }}
-      CI_COMMIT_REF_SLUG: ${{ github.ref_name }}
+        env:
+          CI_REGISTRY_USER: ${{ secrets.CI_REGISTRY_USER }}
+          CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
+          CI_REGISTRY_IMAGE: ${{ vars.CI_REGISTRY_IMAGE }}
+          CI_COMMIT_REF_SLUG: ${{ github.ref_name }}
