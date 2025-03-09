@@ -9,6 +9,7 @@ jobs:
     permissions:
       actions: write
     steps:
+      - run: df -h
       - uses: actions/checkout@HEAD
       - run: gh workflow list -a --json id -q '.[].id' | xargs -L1 -- gh workflow enable --
         env:
@@ -22,3 +23,5 @@ jobs:
           CI_REGISTRY_PASSWORD: ${{ secrets.CI_REGISTRY_PASSWORD }}
           CI_REGISTRY_IMAGE: ${{ vars.CI_REGISTRY_IMAGE }}
           CI_COMMIT_REF_SLUG: ${{ github.ref_name }}
+      - run: df -h
+  
